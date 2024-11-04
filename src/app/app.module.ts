@@ -9,6 +9,7 @@ import { TodosComponent } from './todos/todos.component';
 import { DonesComponent } from './dones/dones.component';
 import { DeletesComponent } from './deletes/deletes.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     DonesComponent,
     DeletesComponent,
   ],
-  imports: [BrowserModule, FormsModule, NoopAnimationsModule, MatTabsModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    NoopAnimationsModule,
+    MatTabsModule,
+    MatIconModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

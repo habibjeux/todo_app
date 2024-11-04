@@ -1,8 +1,7 @@
 <div class="relative h-screen max-h-screen">
   <ng-container class="overflow-scroll">
-    <todos *ngIf="index == 0"></todos>
-    <dones *ngIf="index == 1"></dones>
-    <deletes *ngIf="index == 2"></deletes>
+    <todos [todos]="getTodos()" *ngIf="index == 0"></todos>
+    <dones [todos]="getTodos()" *ngIf="index == 1"></dones>
   </ng-container>
   <div
     #tabs
@@ -10,24 +9,17 @@
   >
     <p
       [ngClass]="{ 'bg-slate-800': index == 0 }"
-      class="w-1/3 hover:bg-slate-800 p-2.5 cursor-pointer"
+      class="w-1/2 hover:bg-slate-800 p-2.5 cursor-pointer"
       (click)="toggleIndex(0)"
     >
       Todos
     </p>
     <p
       [ngClass]="{ 'bg-slate-800': index == 1 }"
-      class="w-1/3 hover:bg-slate-800 p-2.5 cursor-pointer"
+      class="w-1/2 hover:bg-slate-800 p-2.5 cursor-pointer"
       (click)="toggleIndex(1)"
     >
       Dones
-    </p>
-    <p
-      [ngClass]="{ 'bg-slate-800': index == 2 }"
-      class="w-1/3 hover:bg-slate-800 p-2.5 cursor-pointer"
-      (click)="toggleIndex(2)"
-    >
-      Deletes
     </p>
   </div>
 </div>

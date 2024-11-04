@@ -1,32 +1,46 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Todo } from 'src/types/todo';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'todos',
   templateUrl: './todos.component.html',
 })
 export class TodosComponent {
-  newTodo: string = '';
-  @Input() todos: string[] = [];
+  constructor(private localStorageService: LocalStorageService) {}
 
-  @Output() todoChange = new EventEmitter<string[]>();
+  newTodo: string = '';
+  @Input() todos: Todo[] = [];
+
+  @Output() onRemoveTodo = new EventEmitter<Todo[]>();
+  @Output() onDoneTodo = new EventEmitter<Todo[]>();
 
   addTodo(todo: string) {
     if (todo === '') {
       return;
     }
-    if (this.todos.includes(todo)) {
+    if (this.todos.find((t) => t.title === todo)) {
       return;
     }
-    this.todos.push(todo);
+    this.todos.push({ title: todo, completed: false });
     this.newTodo = '';
-  }
-
-  updateTodo(index: number, todo: string) {
-    this.todos[index] = todo;
+    this.refreshList();
   }
 
   removeTodo(index: number) {
     this.todos.splice(index, 1);
-    this.todoChange.emit(this.todos);
+    this.onRemoveTodo.emit(this.todos);
+    this.refreshList();
+  }
+
+  doneTodo(index: number) {
+    this.todos[index].completed = !this.todos[index].completed;
+    this.onDoneTodo.emit(this.todos);
+    this.refreshList();
+  }
+
+  refreshList(): void {
+    this.localStorageService.removeItem('todos');
+    this.localStorageService.setItem('todos', JSON.stringify(this.todos));
   }
 }

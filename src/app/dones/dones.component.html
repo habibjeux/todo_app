@@ -1,1 +1,13 @@
-<p>dones</p>
+<div class="mx-2">
+  <ul class="flex flex-col gap-2 mt-4">
+    <li *ngFor="let todo of todos; let index = index">
+      <todo-item
+        *ngIf="todo.completed"
+        [todo]="todo"
+        [index]="index"
+        (removeTodo)="removeTodo($event)"
+        (doneTodo)="doneTodo($event)"
+      ></todo-item>
+    </li>
+  </ul>
+</div>
